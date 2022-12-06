@@ -8,10 +8,6 @@ import entities.*;
 public class Game {
     private int width;
     private int height;
-    private BaseEntity north;
-    private BaseEntity south;
-    private BaseEntity west;
-    private BaseEntity east;
     private Enemy ball;
     private Player player;
     private Obstacle map;
@@ -22,12 +18,9 @@ public class Game {
         this.height = height;
         
         this.map = new Obstacle(map[0]);
-        this.player = new Player(400, 300);
+        this.player = new Player(map[0]);
         this.ball = new Enemy(400, 300);
-        this.north = new BaseEntity(1, 1, 800, 1);
-        this.south = new BaseEntity(0, 599, 800, 1);
-        this.west = new BaseEntity(1, 1, 1, 600);
-        this.east = new BaseEntity(799, 1, 1, 600);
+     
         
         // TODO Ball und Spieler erzeugen
 
@@ -72,10 +65,6 @@ public class Game {
         this.ball.draw(window);
        // this.playerLeft.draw(window);
         this.player.draw(window);
-        this.north.draw2(window);
-        this.south.draw2(window);
-        this.east.draw(window);
-        this.west.draw(window);
         window.setColor(0, 0, 0);
         window.setBold(true);
         window.setFontSize(13);

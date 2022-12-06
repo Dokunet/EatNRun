@@ -3,8 +3,8 @@ package entities;
 import gui.Window;
 
 public class BaseEntity {
-    public int x;
-    public int y;
+    protected int x;
+    protected int y;
     public int width;
     public int height;
 
