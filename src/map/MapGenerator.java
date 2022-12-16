@@ -22,30 +22,24 @@ public class MapGenerator {
 	}
 
 	private void readFiles(int numberOfMaps, File folder) {
-		BufferedReader br = null;
 		this.Maps = new char[numberOfMaps][15][20];
 		String line = null;
 		File[] fileEntry = folder.listFiles();
 		//for (final File fileEntry : folder.listFiles()) {
 		for(int map = 0; map < numberOfMaps; map++)	{
 		File file = new File(fileEntry[map].getAbsoluteFile().toString());
-			try {
-				br = new BufferedReader(new FileReader(file));
+			try (BufferedReader br = new BufferedReader(new FileReader(file));) {
 
 				//for (int map = 0; map < numberOfMaps; map++) {
 					for (int col = 0; col < 15; col++) {
-						try {
-							line = br.readLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						line = br.readLine();
 						for (int row = 0; row < 20; row++) {
 							this.Maps[map][col][row] = line.charAt(row);
 						}
 
 					}
 				//}
-			} catch (FileNotFoundException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
