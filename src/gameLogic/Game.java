@@ -15,6 +15,7 @@ public class Game {
 	private Enemy enemy;
 	private Player player;
 	private Finish finish;
+	private int lives;
 	private Obstacle map;
 	private MultipleEntityHandler entityHandler;
 	private Window window;
@@ -22,6 +23,7 @@ public class Game {
 	private boolean newGame = false;
 
 	public Game(int width, int height, char[][][] map, Window window) {
+		this.lives = 5;
 		this.window = window;
 		this.width = width;
 		this.height = height;
@@ -31,7 +33,7 @@ public class Game {
 		this.map = new Obstacle(map[mapNumber]);
 		this.player = new Player(map[mapNumber]);
 		this.finish = new Finish(map[mapNumber]);
-		
+
 	}
 
 	public void handleEvents() {
@@ -50,37 +52,60 @@ public class Game {
 	public boolean step() {
 
 		int newMapNumber = this.finish.listener(mapNumber, player);
-		
-		multyListener(entityHandler.getEnemies());
-		multyListener(entityHandler.getCakes());
-	
+		int newLives = multyListener(entityHandler.getEnemies(), this.lives);
+		int newCakeCount = multyListener(entityHandler.getCakes(), 0);
+
 		if (newMapNumber != mapNumber) {
-			if (newMapNumber < 0) {
-				return true;
-			}
 			resetLevel(newMapNumber);
+			if (newMapNumber < 0) {
+				window.close();
+				window = new Window("Game Over", 800, 600);
+				window.setColor(255, 127, 0);
+				window.setBold(true);
+				window.setFontSize(50);
+				window.drawStringCentered("You Won", 400, 300);
+				window.open();
+				window.waitUntilClosed();
+			} 
+		} else if (newLives != this.lives) {
+			resetLevel(newMapNumber);
+			if (newLives <= 0) {
+				//this.drawLosingScreen();
+				window.close();
+				window = new Window("Game Over", 800, 600);
+				window.setColor(255, 127, 0);
+				window.setBold(true);
+				window.setFontSize(50);
+				window.drawStringCentered("You Lost", 400, 300);
+				window.open();
+				window.waitUntilClosed();
+			}
+			this.lives = newLives;
+			System.out.println(this.lives);
 		}
 
 		return false;
 	}
-	
+
 	public void resetLevel(int newMapNumber) {
 		this.mapNumber = newMapNumber;
 		this.entityHandler = new MultipleEntityHandler(allMaps[mapNumber], window);
+		this.finish = new Finish(allMaps[mapNumber]);
 		this.map = new Obstacle(allMaps[mapNumber]);
 		this.player = new Player(allMaps[mapNumber]);
 		this.drawGame();
 	}
-	
-	public void multyListener(BaseEntity[] entities) {
+
+	public int multyListener(BaseEntity[] entities, int amount) {
+		int newAmount = amount; 
 		for (BaseEntity entity : entities) {
-			entity.listener(3,player);
+			newAmount = entity.listener(amount, player);
 		}
+		return newAmount;
 	}
 
 	public void drawGame() {
 		this.map.draw(window);
-		
 		this.player.draw(window);
 		this.finish.draw(window);
 		this.entityHandler.drawEntities(window);
@@ -88,14 +113,24 @@ public class Game {
 		window.setBold(true);
 		window.setFontSize(13);
 		if (this.newGame) {
-
 			this.newGame = false;
 		}
 
 	}
 
-}
+	public void drawWinningScreen() {
+		
+		window.drawStringCentered("YOU WIN", 100, 100);
+	}
+	
+	public void drawLosingScreen() {
+		window.setColor(255, 255, 255);
+		window.drawRect(0, 0, 800, 600);
+		window.drawStringCentered("YOU LOOSE", 100, 100);
+	}
+	
 
+}
 
 // this.ball.step();
 // if ((this.ball.x == this.playerLeft.x + 10 && this.ball.y >=
