@@ -6,14 +6,14 @@ public class Player extends BaseEntity {
 	private int score;
 
 	public Player(char[][] map) {
-		super(0, 0, 50, 50, map);
+		super(0, 0, 40, 40, map, 'P');
 		int x = 0;
 		int y = 0;
 		for (int col = 0; col < map.length; col++) {
 			for (int row = 0; row < map[col].length; row++) {
 				if (map[col][row] == 'P') {
-					y = col * 50;
-					x = row * 50 ;
+					y = col * 40;
+					x = row * 40 ;
 				}
 			}
 		}
@@ -34,15 +34,15 @@ public class Player extends BaseEntity {
 	}
 
 	public void moveDown() {
-		super.move(super.x, super.y + 4, 30, 40);
+		super.move(super.x, super.y + 4, 30, 39);
 	}
 
 	public void moveLeft() {
-		super.move(super.x - 4, super.y, 0, 40);
+		super.move(super.x - 4, super.y, 0, 39);
 	}
 
 	public void moveRight() {
-		super.move(super.x + 4, super.y, 30, 40);
+		super.move(super.x + 4, super.y, 30, 39);
 	}
 
 	public void incScore() {

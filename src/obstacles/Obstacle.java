@@ -23,7 +23,7 @@ public class Obstacle {
 
 	private void drawCube(int x, int y, Window window) {
 		window.setColor(0, 0, 0);
-		window.fillRect(x*50, y*50, 50, 50 );
+		window.fillRect(x*40, y*40, 40, 40 );
 		
 	}
 	

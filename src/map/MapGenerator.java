@@ -25,12 +25,9 @@ public class MapGenerator {
 		this.Maps = new char[numberOfMaps][15][20];
 		String line = null;
 		File[] fileEntry = folder.listFiles();
-		//for (final File fileEntry : folder.listFiles()) {
 		for(int map = 0; map < numberOfMaps; map++)	{
 		File file = new File(fileEntry[map].getAbsoluteFile().toString());
 			try (BufferedReader br = new BufferedReader(new FileReader(file));) {
-
-				//for (int map = 0; map < numberOfMaps; map++) {
 					for (int col = 0; col < 15; col++) {
 						line = br.readLine();
 						for (int row = 0; row < 20; row++) {
@@ -38,7 +35,6 @@ public class MapGenerator {
 						}
 
 					}
-				//}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
