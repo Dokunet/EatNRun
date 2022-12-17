@@ -20,6 +20,7 @@ public class Game {
 	private char[][][] allMaps;
 	public char[][] currentMap;
 	private boolean newGame = false;
+	private int allMapNumbers;
 
 	public Game(int width, int height, char[][][] map, Window window) {
 		this.lives = 5;
@@ -28,12 +29,13 @@ public class Game {
 		this.width = width;
 		this.height = height;
 		this.mapNumber = map.length - 1;
+		this.allMapNumbers = map.length - 1;
 		this.allMaps = map;
-		this.currentMap = map[mapNumber];
-		this.entityHandler = new MultipleEntityHandler(map[mapNumber], window);
-		this.map = new Obstacle(map[mapNumber]);
-		this.player = new Player(map[mapNumber]);
-		this.finish = new Finish(map[mapNumber]);
+		this.currentMap = map[allMapNumbers - mapNumber];
+		this.entityHandler = new MultipleEntityHandler(map[allMapNumbers - mapNumber], window);
+		this.map = new Obstacle(map[allMapNumbers - mapNumber]);
+		this.player = new Player(map[allMapNumbers - mapNumber]);
+		this.finish = new Finish(map[allMapNumbers - mapNumber]);
 
 	}
 
@@ -57,7 +59,7 @@ public class Game {
 		this.entityHandler.enemyMovement();
 		if (newMapNumber != mapNumber) {
 			if (newMapNumber < 0) {
-				drawGameOverScreen("You Won");
+				drawGameOverScreen("You Win!");
 			} else {
 				resetLevel(newMapNumber);
 			}
@@ -76,10 +78,10 @@ public class Game {
 
 	public void resetLevel(int newMapNumber) {
 		this.mapNumber = newMapNumber;
-		this.entityHandler = new MultipleEntityHandler(allMaps[mapNumber], window);
-		this.finish = new Finish(allMaps[mapNumber]);
-		this.map = new Obstacle(allMaps[mapNumber]);
-		this.player = new Player(allMaps[mapNumber]);
+		this.entityHandler = new MultipleEntityHandler(allMaps[allMapNumbers - mapNumber], window);
+		this.finish = new Finish(allMaps[allMapNumbers - mapNumber]);
+		this.map = new Obstacle(allMaps[allMapNumbers - mapNumber]);
+		this.player = new Player(allMaps[allMapNumbers - mapNumber]);
 		this.drawGame();
 	}
 
@@ -107,6 +109,10 @@ public class Game {
 		window.setBold(true);
 		window.setFontSize(15);
 		window.drawStringCentered("Anzahl Kuchen: " + this.cakeCount * -1, 500, 25);
+		window.setColor(250, 250, 250);
+		window.setBold(true);
+		window.setFontSize(15);
+		window.drawStringCentered("Level: " + ((allMapNumbers - mapNumber) + 1), 700, 25);
 		window.setColor(0, 0, 0);
 		window.setBold(true);
 		window.setFontSize(13);
