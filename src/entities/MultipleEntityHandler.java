@@ -10,7 +10,7 @@ public class MultipleEntityHandler {
 	private int numberOfEnemies;
 	private char[][] map;
 	private Window window;
-	private int cakeToDelete;
+
 
 	public MultipleEntityHandler(char[][] map, Window window) {
 		this.map = map;
@@ -73,8 +73,6 @@ public class MultipleEntityHandler {
 				}
 			}
 		}
-//		if (this.map[yIndex][xIndex] == object || this.map[yIndexAddedMargin][xIndexAddedMargin] == object
-//		 || this.map[yIndex][xIndexAddedMargin] == object || this.map[yIndexAddedMargin][xIndex] == object
 
 	}
 

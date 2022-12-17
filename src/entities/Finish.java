@@ -3,10 +3,7 @@ package entities;
 import gui.Window;
 
 public class Finish extends BaseEntity {
-	
-	private int col;
-	private int row;
-	
+
 	public Finish(char[][] map) {
 		super(0, 0, 40, 40, map, 'F');
 		for (int col = 0; col < map.length; col++) {
@@ -21,9 +18,7 @@ public class Finish extends BaseEntity {
 	
 	@Override
 	public void draw(Window window) {
-
 		window.drawImage("resources/images/finish.png", super.x, super.y);
-		// window.fillRect(super.x, super.y, 2);
 	}
 
 }

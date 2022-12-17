@@ -40,8 +40,6 @@ public class BaseEntity {
 		int yIndexAddedMargin = (dy + characterMarginDown) / 40;
 		if (this.map[yIndex][xIndex] == object || this.map[yIndexAddedMargin][xIndexAddedMargin] == object
 				|| this.map[yIndex][xIndexAddedMargin] == object || this.map[yIndexAddedMargin][xIndex] == object) {
-			System.out.println("xIndex: " + xIndex + " yIndex: " + yIndex + " CrackXIndex: " + xIndexAddedMargin
-					+ " crackYIndex: " + yIndexAddedMargin);
 			return true;
 		}
 
@@ -62,14 +60,6 @@ public class BaseEntity {
 			}
 		}
 		return amount;
-	}
-
-	public char getSymbol() {
-		return this.symbol;
-	}
-
-	public int getArrayIndex() {
-		return this.arrayIndex;
 	}
 	protected void move(int x, int y) {
 		int oldX = this.x/40;

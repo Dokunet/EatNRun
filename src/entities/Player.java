@@ -3,8 +3,6 @@ package entities;
 import gui.Window;
 
 public class Player extends BaseEntity {
-	private int score;
-
 	public Player(char[][] map) {
 		super(0, 0, 40, 40, map, 'P');
 		int x = 0;

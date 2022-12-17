@@ -1,8 +1,6 @@
 package gameLogic;
 
-import gui.Color;
 import gui.Window;
-import map.MapGenerator;
 import obstacles.Obstacle;
 import entities.BaseEntity;
 
@@ -12,7 +10,6 @@ public class Game {
 	private int width;
 	private int height;
 	private int mapNumber;
-	private Enemy enemy;
 	private Player player;
 	private Finish finish;
 	private int lives;
@@ -131,23 +128,3 @@ public class Game {
 	}
 
 }
-
-// this.ball.step();
-// if ((this.ball.x == this.playerLeft.x + 10 && this.ball.y >=
-// this.playerLeft.y
-// && this.ball.y <= this.playerLeft.y + 90)
-// || (this.ball.x == this.playerRight.x && this.ball.y >= this.playerRight.y
-// && this.ball.y <= this.playerRight.y + 90)) {
-// this.ball.bounceOfVertical();
-// } else if (this.ball.y == 0 || this.ball.y == 600) {
-// this.ball.bounceOfHorizontal();
-// } else if (this.ball.x < 0){
-// this.playerRight.incScore();
-// this.newGame = true;
-// } else if (this.ball.x > 800){
-// this.playerLeft.incScore();
-// this.newGame = true;
-// }
-
-// // TODO Einen Zeitschritt prozessieren, also den Ball bewegen und Kollisionen
-// behandeln.

@@ -26,10 +26,5 @@ public class Obstacle {
 		window.fillRect(x*40, y*40, 40, 40 );
 		
 	}
-	
-	public char[][] getCurrentMap(){
-		return this.mapOutline;
-	}
-	
 
 }
