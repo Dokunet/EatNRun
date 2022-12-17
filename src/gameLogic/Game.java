@@ -16,19 +16,23 @@ public class Game {
 	private Player player;
 	private Finish finish;
 	private int lives;
+	private int cakeCount;
 	private Obstacle map;
 	private MultipleEntityHandler entityHandler;
 	private Window window;
 	private char[][][] allMaps;
+	public char[][] currentMap;
 	private boolean newGame = false;
 
 	public Game(int width, int height, char[][][] map, Window window) {
 		this.lives = 5;
+		this.cakeCount = 0;
 		this.window = window;
 		this.width = width;
 		this.height = height;
 		this.mapNumber = map.length - 1;
 		this.allMaps = map;
+		this.currentMap = map[mapNumber];
 		this.entityHandler = new MultipleEntityHandler(map[mapNumber], window);
 		this.map = new Obstacle(map[mapNumber]);
 		this.player = new Player(map[mapNumber]);
@@ -49,42 +53,27 @@ public class Game {
 
 	}
 
-	public boolean step() {
-
+	public void step() {
 		int newMapNumber = this.finish.listener(mapNumber, player);
 		int newLives = multyListener(entityHandler.getEnemies(), this.lives);
-		int newCakeCount = multyListener(entityHandler.getCakes(), 0);
-
+		int newCakeCount = multyListener(entityHandler.getCakes(), cakeCount);
 		if (newMapNumber != mapNumber) {
-			resetLevel(newMapNumber);
 			if (newMapNumber < 0) {
-				window.close();
-				window = new Window("Game Over", 800, 600);
-				window.setColor(255, 127, 0);
-				window.setBold(true);
-				window.setFontSize(50);
-				window.drawStringCentered("You Won", 400, 300);
-				window.open();
-				window.waitUntilClosed();
-			} 
+				drawGameOverScreen("You Won");
+			} else {
+				resetLevel(newMapNumber);
+			}
 		} else if (newLives != this.lives) {
-			resetLevel(newMapNumber);
 			if (newLives <= 0) {
-				//this.drawLosingScreen();
-				window.close();
-				window = new Window("Game Over", 800, 600);
-				window.setColor(255, 127, 0);
-				window.setBold(true);
-				window.setFontSize(50);
-				window.drawStringCentered("You Lost", 400, 300);
-				window.open();
-				window.waitUntilClosed();
+				drawGameOverScreen("You Lost");
+			} else {
+				resetLevel(newMapNumber);
 			}
 			this.lives = newLives;
-			System.out.println(this.lives);
+		} else if (newCakeCount != cakeCount) {
+			entityHandler.destroyCake(player.getX(), player.getY());
 		}
-
-		return false;
+		cakeCount = newCakeCount;
 	}
 
 	public void resetLevel(int newMapNumber) {
@@ -97,10 +86,17 @@ public class Game {
 	}
 
 	public int multyListener(BaseEntity[] entities, int amount) {
-		int newAmount = amount; 
+		int newAmount = amount;
 		for (BaseEntity entity : entities) {
-			newAmount = entity.listener(amount, player);
+			if (entity != null) {
+				newAmount = entity.listener(amount, player);
+//				if (amount != newAmount && entity.getSymbol() == 'C') {
+//					this.entityHandler.destroyCake(entity.getArrayIndex());
+//					return newAmount;
+//				}
+			}
 		}
+
 		return newAmount;
 	}
 
@@ -109,6 +105,14 @@ public class Game {
 		this.player.draw(window);
 		this.finish.draw(window);
 		this.entityHandler.drawEntities(window);
+		window.setColor(250, 250, 250);
+		window.setBold(true);
+		window.setFontSize(15);
+		window.drawStringCentered("Anzahl Leben: " + this.lives, 300, 25);
+		window.setColor(250, 250, 250);
+		window.setBold(true);
+		window.setFontSize(15);
+		window.drawStringCentered("Anzahl Kuchen: " + this.cakeCount * -1, 500, 25);
 		window.setColor(0, 0, 0);
 		window.setBold(true);
 		window.setFontSize(13);
@@ -118,17 +122,16 @@ public class Game {
 
 	}
 
-	public void drawWinningScreen() {
-		
-		window.drawStringCentered("YOU WIN", 100, 100);
+	public void drawGameOverScreen(String message) {
+		window.close();
+		window = new Window("Game Over", 800, 600);
+		window.setColor(255, 127, 0);
+		window.setBold(true);
+		window.setFontSize(50);
+		window.drawStringCentered(message, 400, 300);
+		window.open();
+		window.waitUntilClosed();
 	}
-	
-	public void drawLosingScreen() {
-		window.setColor(255, 255, 255);
-		window.drawRect(0, 0, 800, 600);
-		window.drawStringCentered("YOU LOOSE", 100, 100);
-	}
-	
 
 }
 

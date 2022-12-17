@@ -20,10 +20,7 @@ public class WindowEatNRun {
 
 		while (window.isOpen()) {
 			game.handleEvents();
-			if (game.step()) {
-				window.close();
-			}
-			;
+			game.step(); 
 			game.drawGame();
 			window.refreshAndClear(20);
 		}

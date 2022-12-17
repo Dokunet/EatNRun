@@ -13,7 +13,7 @@ public class Player extends BaseEntity {
 			for (int row = 0; row < map[col].length; row++) {
 				if (map[col][row] == 'P') {
 					y = col * 40;
-					x = row * 40 ;
+					x = row * 40;
 				}
 			}
 		}
@@ -23,33 +23,31 @@ public class Player extends BaseEntity {
 
 	@Override
 	public void draw(Window window) {
-
 		window.drawImage("resources/images/hero.png", super.x, super.y);
-		// window.fillRect(super.x, super.y, 2);
 	}
 
 	public void moveUp() {
-		
-		super.move(super.x, super.y - 4, 30, 0);
+
+		super.move(super.x, super.y - 4, 20, 0);
 	}
 
 	public void moveDown() {
-		super.move(super.x, super.y + 4, 30, 39);
+		super.move(super.x, super.y + 4, 20, 30);
 	}
 
 	public void moveLeft() {
-		super.move(super.x - 4, super.y, 0, 39);
+		super.move(super.x - 4, super.y, 0, 30);
 	}
 
 	public void moveRight() {
-		super.move(super.x + 4, super.y, 30, 39);
+		super.move(super.x + 4, super.y, 20, 30);
 	}
 
-	public void incScore() {
-		this.score += 1;
+	public int getX() {
+		return super.x;
 	}
 
-	public int getScore() {
-		return this.score;
+	public int getY() {
+		return super.y;
 	}
 }

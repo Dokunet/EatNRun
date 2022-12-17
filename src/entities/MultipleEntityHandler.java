@@ -10,6 +10,7 @@ public class MultipleEntityHandler {
 	private int numberOfEnemies;
 	private char[][] map;
 	private Window window;
+	private int cakeToDelete;
 
 	public MultipleEntityHandler(char[][] map, Window window) {
 		this.map = map;
@@ -42,11 +43,38 @@ public class MultipleEntityHandler {
 					enemies[enemyNumber] = new Enemy(row * 40, col * 40, this.map, map[col][row]);
 					enemyNumber++;
 				} else if (map[col][row] == 'C') {
-					cakes[cakeNumber] = new Cake(row * 40, col * 40, this.map);
+					cakes[cakeNumber] = new Cake(row * 40, col * 40, this.map, cakeNumber);
 					cakeNumber++;
 				}
 			}
 		}
+
+	}
+
+	public void destroyCake(int x, int y) {
+		int xIndex = x / 40;
+		int yIndex = y / 40;
+		int xIndexAddedMargin = (x + 30) / 40;
+		int yIndexAddedMargin = (y + 40) / 40;
+		for (int i = 0; i < cakes.length; i++) {
+			if (cakes[i] != null) {
+				if (((cakes[i].x / 40) == xIndex && (cakes[i].y / 40) == yIndex)) {
+					cakes[i] = null;
+					this.map[yIndex][xIndex] = ' ';
+				} else if ((cakes[i].x / 40) == xIndexAddedMargin && (cakes[i].y / 40) == yIndex) {
+					cakes[i] = null;
+					this.map[yIndex][xIndexAddedMargin] = ' ';
+				} else if ((cakes[i].x / 40) == xIndex && (cakes[i].y / 40) == yIndexAddedMargin) {
+					cakes[i] = null;
+					this.map[yIndexAddedMargin][xIndex] = ' ';
+				} else if ((cakes[i].x / 40) == xIndexAddedMargin && (cakes[i].y / 40) == yIndexAddedMargin) {
+					cakes[i] = null;
+					this.map[yIndexAddedMargin][xIndexAddedMargin] = ' ';
+				}
+			}
+		}
+//		if (this.map[yIndex][xIndex] == object || this.map[yIndexAddedMargin][xIndexAddedMargin] == object
+//		 || this.map[yIndex][xIndexAddedMargin] == object || this.map[yIndexAddedMargin][xIndex] == object
 
 	}
 
@@ -55,7 +83,9 @@ public class MultipleEntityHandler {
 			enemy.draw(window);
 		}
 		for (Cake cake : cakes) {
-			cake.draw(window);
+			if (cake != null) {
+				cake.draw(window);
+			}
 		}
 	}
 
