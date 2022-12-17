@@ -88,6 +88,12 @@ public class MultipleEntityHandler {
 			}
 		}
 	}
+	
+	public void enemyMovement() {
+		for (Enemy enemy : enemies) {
+			enemy.step();
+		}
+	}
 
 	public Enemy[] getEnemies() {
 		return enemies;

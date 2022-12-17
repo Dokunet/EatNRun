@@ -14,6 +14,19 @@ public class Enemy extends BaseEntity {
 		super(x, y, 30, 30, map, direction);
 		super.symbol = direction;
 		this.direction = direction;
+		if (direction == 'N') {
+			this.vy = -1;
+			this.vx = 0;
+		} else if (direction == 'S') {
+			this.vy = 1;
+			this.vx = 0;
+		} else if (direction == 'E') {
+			this.vx = 1;
+			this.vy = 0;
+		} else if (direction == 'W') {
+			this.vx = -1;
+			this.vy = 0;
+		}
 
 	}
 
@@ -23,7 +36,11 @@ public class Enemy extends BaseEntity {
 	}
 
 	public void step() {
-		// super.move(super.x + this.vx, super.y + this.vy)
+		if(super.doesCollide(super.x, super.y, 39, 39, '#')) {
+			this.vx = this.vx * -1;
+			this.vy = this.vy * -1;
+		}
+		 super.move(super.x + this.vx, super.y + this.vy);
 	}
 
 	public void bounceOfHorizontal() {

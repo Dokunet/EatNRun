@@ -71,5 +71,22 @@ public class BaseEntity {
 	public int getArrayIndex() {
 		return this.arrayIndex;
 	}
+	protected void move(int x, int y) {
+		int oldX = this.x/40;
+		int oldY = this.y/40;
+		int newX = x/40;
+		int newY = y/40;
+		if(map[newY][newX] == '#' || map[oldY][oldX] == '#') {	
+			this.x = x;
+			this.y = y;
+			return;
+		}
+		if(map[oldY][oldX] != map[newY][newX]) {
+			map[newY][newX] = map[oldY][oldX];
+			map[oldY][oldX] = ' ';
+		}
+		this.x = x;
+		this.y = y;
+	}
 
 }

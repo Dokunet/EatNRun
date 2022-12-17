@@ -57,6 +57,7 @@ public class Game {
 		int newMapNumber = this.finish.listener(mapNumber, player);
 		int newLives = multyListener(entityHandler.getEnemies(), this.lives);
 		int newCakeCount = multyListener(entityHandler.getCakes(), cakeCount);
+		this.entityHandler.enemyMovement();
 		if (newMapNumber != mapNumber) {
 			if (newMapNumber < 0) {
 				drawGameOverScreen("You Won");
@@ -90,10 +91,6 @@ public class Game {
 		for (BaseEntity entity : entities) {
 			if (entity != null) {
 				newAmount = entity.listener(amount, player);
-//				if (amount != newAmount && entity.getSymbol() == 'C') {
-//					this.entityHandler.destroyCake(entity.getArrayIndex());
-//					return newAmount;
-//				}
 			}
 		}
 
